@@ -1,34 +1,67 @@
 package org.example.mediqback.user;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+
+import org.example.mediqback.user.model.EmailVerify;
 import org.example.mediqback.user.model.User;
 import org.example.mediqback.user.model.UserDto;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-
 public class UserService {
     private final UserRepository userRepository;
+    private final EmailVerifyRepository emailVerifyRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
 
-    public UserDto.SignupRes signup(UserDto.SignupReq dto) {
+    public void signup(UserDto.SignupReq dto) {
         User user = dto.toEntity();
-        User savedUser = userRepository.save(user);
-        return UserDto.SignupRes.from(savedUser);
-    }
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        userRepository.save(user);
 
-    public UserDto.SignupRes findBy(Long idx) {
-        User entity = userRepository.findById(idx).orElseThrow();
-        return UserDto.SignupRes.from(entity);
-    }
+        // 이메일 전송
+        MimeMessage message  = mailSender.createMimeMessage();
+        try {
+            String uuid = UUID.randomUUID().toString();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-    public UserDto.LoginRes login(UserDto.LoginReq dto) {
-        User entity = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
-        if (!entity.getPassword().equals(dto.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            helper.setTo(dto.getEmail());
+            String subject = "[안녕] 환영";
+            String htmlContents = "<a href='http://localhost:8080/user/verify?uuid="+uuid+"'>이메일 인증</a>";
+            helper.setSubject(subject);
+            helper.setText(htmlContents, true);
+
+            mailSender.send(message);
+
+            EmailVerify emailVerify = EmailVerify.builder().email(dto.getEmail()).uuid(uuid).build();
+            emailVerifyRepository.save(emailVerify);
+        } catch (MessagingException e) {
+            throw new RuntimeException("이메일 전송중 오류발생", e);
         }
-        return UserDto.LoginRes.from(entity);
-    }
 
+
+
+    }
+    public void verify(String uuid) {
+        EmailVerify emailVerify = emailVerifyRepository.findByUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인증 코드입니다."));
+
+        User user = userRepository.findByEmail(emailVerify.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("가입된 사용자를 찾을 수 없습니다."));
+
+        // 계정 활성화
+        user.setEnable(true);
+        userRepository.save(user);
+    }
 }
