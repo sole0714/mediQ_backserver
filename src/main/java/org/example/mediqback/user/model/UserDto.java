@@ -16,6 +16,7 @@ public class UserDto {
                     .email(this.email)
                     .name(this.name)
                     .password(this.password)
+                    .enable(false)
                     .build();
         }
     }
