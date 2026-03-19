@@ -44,5 +44,16 @@ public class BookmarkController {
         return ResponseEntity.ok(response);
     }
 
+    // 북마크 삭제 기능
+    @DeleteMapping("/delete/{idx}")
+    public ResponseEntity<String> deleteBookmark(
+            @AuthenticationPrincipal AuthUserDetails userDetails,
+            @PathVariable Long idx) {
+
+        bookmarkService.delete(idx);
+
+        return ResponseEntity.ok("북마크가 삭제되었습니다.");
+    }
+
 
 }

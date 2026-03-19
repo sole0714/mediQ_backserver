@@ -1,5 +1,6 @@
 package org.example.mediqback.Bookmark;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.mediqback.Bookmark.model.Bookmark;
 import org.example.mediqback.Bookmark.model.BookmarkDto;
@@ -34,4 +35,15 @@ public class BookmarkService {
 
         return bookmarks.stream().map(BookmarkDto.Res::from).toList();
     }
+
+    // 북마크 삭제
+    @Transactional
+    public void delete(Long idx) {
+        Bookmark bookmark = bookmarkRepository.findById(idx).orElseThrow(
+                () -> new RuntimeException("해당 북마크를 찾을 수 없습니다.")
+        );
+
+        bookmarkRepository.delete(bookmark);
+    }
+
 }
