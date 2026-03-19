@@ -32,6 +32,7 @@ public class BookmarkDto {
     @AllArgsConstructor
     @Builder
     public static class Res {
+        private Long idx;
         private String placeId;
         private String name;
         private String location;
@@ -41,6 +42,7 @@ public class BookmarkDto {
 
         public static Res from(Bookmark entity) {
             return Res.builder()
+                    .idx(entity.getIdx())
                     .placeId(entity.getPlaceId())
                     .name(entity.getName())
                     .location(entity.getLocation())

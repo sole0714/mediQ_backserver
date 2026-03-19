@@ -19,7 +19,7 @@ import java.util.List;
 public class BookmarkController {
     private final BookmarkService bookmarkService;
 
-
+    // 북마크 등록
     @PostMapping("/register")
     public ResponseEntity<BookmarkDto.Res> register(
             @AuthenticationPrincipal AuthUserDetails userDetails,
@@ -27,5 +27,22 @@ public class BookmarkController {
         BookmarkDto.Res response = bookmarkService.register(userDetails.toEntity(), dto);
         return ResponseEntity.ok(response);
     }
+
+    // 북마크 상세 조회
+    @GetMapping("/{idx}")
+    public ResponseEntity<BookmarkDto.Res> readBookmark(
+            @PathVariable Long idx) {
+        BookmarkDto.Res response = bookmarkService.read(idx);
+        return ResponseEntity.ok(response);
+    }
+
+    // 북마크 전체 조회
+    @GetMapping("/list")
+    public ResponseEntity<List<BookmarkDto.Res>> getBookmarkList(
+            @AuthenticationPrincipal AuthUserDetails userDetails) {
+        List<BookmarkDto.Res> response = bookmarkService.list(userDetails.toEntity());
+        return ResponseEntity.ok(response);
+    }
+
 
 }
