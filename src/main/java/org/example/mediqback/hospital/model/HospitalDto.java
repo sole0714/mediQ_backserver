@@ -49,4 +49,25 @@ public class HospitalDto {
 
     }
 
+    @Getter
+    public static class LoginReq {
+        private String email;
+        private String password;
+    }
+
+    @Builder
+    @Getter
+    public static class LoginRes {
+        private Long idx;
+        private String name;
+        private String email;
+
+        public static LoginRes from(Hospital entity) {
+            return LoginRes.builder()
+                    .idx(entity.getIdx())
+                    .email(entity.getEmail())
+                    .name(entity.getName())
+                    .build();
+        }
+    }
 }
