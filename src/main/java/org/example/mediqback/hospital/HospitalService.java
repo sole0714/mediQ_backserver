@@ -14,4 +14,8 @@ public class HospitalService {
         Hospital hospital = dto.toEntity();
          return HospitalDto.SignupRes.from(hospital);
     }
+
+    public HospitalDto.LoginRes login(HospitalDto.LoginReq dto) {
+        return null;
+    }
 }
