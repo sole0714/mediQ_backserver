@@ -65,10 +65,10 @@ public class UserService implements UserDetailsService { // 시큐리티 인터�
     }
 
     public User kakaoLogin(String socialId, String nickname, String email) {
-        // 1. 기존에 가입한 카카오 회원인지 DB에서 조회
+        // 기존에 가입한 카카오 회원인지 DB에서 조회
         return userRepository.findBySocialIdAndProvider(socialId, "KAKAO")
                 .orElseGet(() -> {
-                    // 2. 처음 온 회원이면 강제로 회원가입을 진행합니다.
+                    // 처음 온 회원이면 강제로 회원가입을 진행합니다.
 
                     // 카카오는 이메일 제공이 필수가 아닐 수 있어서, 이메일이 없으면 임의로 만들어줍니다.
                     String defaultEmail = (email != null && !email.isEmpty()) ? email : socialId + "@kakao.com";
