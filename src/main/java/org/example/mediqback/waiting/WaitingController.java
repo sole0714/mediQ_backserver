@@ -76,7 +76,12 @@ public class WaitingController {
     }
 
 
+    @DeleteMapping("/register")
+    public ResponseEntity deleteRegistration(@RequestBody WaitingDto.DeleteReq waitingDto) {
+        WaitingDto.DeleteRes deleteResult = waitingService.deleteRegistration(waitingDto);
 
+        return ResponseEntity.ok(BaseResponse.success(deleteResult));
+    }
 
 
     @GetMapping("/myOrder")

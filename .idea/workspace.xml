@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df1207b2-e6dd-493c-8f66-0a4fab23b7de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/queue/QueueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/queue/QueueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/queue/model/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/queue/model/Queue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/queue/model/QueueDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/queue/model/QueueDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/WaitingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/WaitingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/WaitingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/WaitingRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/WaitingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/WaitingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/model/WaitingDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediqback/waiting/model/WaitingDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +98,7 @@
       <workItem from="1773904954361" duration="9694000" />
       <workItem from="1773933819571" duration="1169000" />
       <workItem from="1773966305563" duration="12246000" />
+      <workItem from="1774006209946" duration="2606000" />
     </task>
     <servers />
   </component>

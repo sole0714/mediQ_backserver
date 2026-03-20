@@ -36,4 +36,14 @@ public class WaitingService {
         }
         return listResDtoList;
     }
+
+
+    // 대기열 삭제
+    public WaitingDto.DeleteRes deleteRegistration (WaitingDto.DeleteReq dto){
+        Waiting entity = waitingRepository.findByHospitalIdxAndUserIdx(dto.getHospitalIdx(), dto.getUserIdx());
+        waitingRepository.delete(entity);
+        return WaitingDto.DeleteRes.from(entity);
+    }
+
+
 }
