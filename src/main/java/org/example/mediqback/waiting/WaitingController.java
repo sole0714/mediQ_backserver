@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.mediqback.common.model.BaseResponse;
 import org.example.mediqback.queue.QueueService;
 import org.example.mediqback.queue.model.Queue;
+import org.example.mediqback.waiting.model.Waiting;
 import org.example.mediqback.waiting.model.WaitingDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -44,6 +44,16 @@ public class WaitingController {
         int myNumber = waitingService.findMyOrder(userIdx);
 
         return ResponseEntity.ok(BaseResponse.success("내 대기 번호 " + String.valueOf(myNumber - currentTreatmentNumber)));
+    }
+
+
+    @GetMapping("/queue/list/{hospitalIdx}")
+    public ResponseEntity findQueueListByHospitalIdx(
+            @PathVariable("hospitalIdx") Long hospitalIdx
+    ) {
+        List<WaitingDto.ListRes> waitingList = waitingService.findListByHospitalId(hospitalIdx);
+
+        return ResponseEntity.ok(waitingList);
     }
 
 }

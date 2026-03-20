@@ -5,6 +5,9 @@ import org.example.mediqback.waiting.model.Waiting;
 import org.example.mediqback.waiting.model.WaitingDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.json.XMLTokener.entity;
 
 @Service
@@ -26,4 +29,13 @@ public class WaitingService {
         }
     }
 
+    // 현재 대기열 정보 가져오기
+    public List<WaitingDto.ListRes> findListByHospitalId(Long hospitalIdx) {
+        List<Waiting> waitingEntityList = waitingRepository.findAllByHospitalIdx(hospitalIdx);
+        List<WaitingDto.ListRes> listResDtoList = new ArrayList<>();
+        for (Waiting entity : waitingEntityList) {
+            listResDtoList.add(WaitingDto.ListRes.from(entity));
+        }
+        return listResDtoList;
+    }
 }

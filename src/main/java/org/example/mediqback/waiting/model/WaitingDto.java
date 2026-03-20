@@ -61,4 +61,23 @@ public class WaitingDto {
         }
     }
 
+    @Builder
+    @Getter
+    public static class ListRes {
+        private Long hospitalIdx;
+        private Long userIdx;
+        private int waitingNumber;
+        private Status status;
+
+        // Entity > Dto
+        public static ListRes from(Waiting entity) {
+            return ListRes.builder()
+                    .hospitalIdx(entity.getHospitalIdx())
+                    .userIdx(entity.getUserIdx())
+                    .waitingNumber(entity.getWaitingNumber())
+                    .status(entity.getStatus())
+                    .build();
+        }
+    }
+
 }
